@@ -2,211 +2,208 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🖤</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Dünyanın En Güzel Kızına🖤</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{\n  --navy:#030812;\n  --navy2:#061124;\n  --navy3:#0c1d3a;\n  --gold:#b89742;\n  --gold2:#dfc681;\n  --paper:#fcfaf2;\n  --ink:#1a2130;\n}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root {
+  --navy:#02060d;
+  --navy-grad: linear-gradient(135deg, #051329 0%, #010408 100%);
+  --gold:#b89742;
+  --gold2:#dfc681;
+  --paper:#fcfaf2;
+  --ink:#1a2130;
+}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--navy);font-family:'Cormorant Garamond',serif;user-select:none;}
 
-/* ── DERİN ARKA PLAN VE NEBULA ETKİSİ ── */
+/* ── DERİN ARKA PLAN ── */
 #bg{
   position:fixed;inset:0;z-index:0;
-  background: 
-    radial-gradient(circle at 30% 40%, rgba(12, 29, 58, 0.6) 0%, transparent 45%),
-    radial-gradient(circle at 85% 20%, rgba(8, 20, 41, 0.5) 0%, transparent 40%),
-    linear-gradient(135deg, #030813 0%, #010408 100%);
+  background: var(--navy-grad);
 }
 
-/* ── KANVAS (GÜLLER VE YAPRAKLAR İÇİN) ── */
+/* ── PERFORMANS DOSTU AKICI YAPRAK KANVASI ── */
 #canvas-layer {
   position: fixed; inset: 0; z-index: 2; pointer-events: none;
 }
-
-/* ── SİLİK GİZEMLİ AY ── */
-.moon {
-  position:fixed;top:6vh;right:8vw;z-index:1;
-  width:75px;height:75px;border-radius:50%;
-  background:radial-gradient(circle at 30% 30%, #d8c397, #93783a 45%, #2a220f 90%);
-  box-shadow:0 0 40px rgba(184,151,66,0.15), 0 0 100px rgba(12,29,58,0.4);
-  opacity: 0.65;
-  animation: moonPulse 8s ease-in-out infinite;
-}
-@keyframes moonPulse { 0%,100%{opacity:0.55;transform:scale(1);} 50%{opacity:0.7;transform:scale(1.03);} }
 
 /* ── SAHNE DÜZENİ ── */
 #scene{
   position:fixed;inset:0;z-index:10;
   display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:2rem;
+  align-items:center;justify-content:center;
+  padding: 1rem;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Üst İpucu */
 .hint{
-  font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:6px;
-  color:rgba(223,198,129,0.45);text-transform:uppercase;
-  text-shadow: 0 0 10px rgba(184,151,66,0.2);
-  animation:hintPulse 3s ease-in-out infinite;transition:opacity .8s;
+  font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:5px;
+  color:rgba(223,198,129,0.6);text-transform:uppercase;
+  margin-bottom: 1.5rem;
+  animation:hintPulse 2.5s ease-in-out infinite;transition:opacity .4s ease;
 }
-@keyframes hintPulse{0%,100%{opacity:.25;transform:translateY(0);}50%{opacity:0.8;transform:translateY(-3px);}}
+@keyframes hintPulse{0%,100%{opacity:.25;transform:translateY(0);}50%{opacity:0.8;transform:translateY(-2px);}}
 
-/* ── ASİL ZARF TASARIMI ── */
+/* ── MOBİL UYUMLU ASİL ZARF ── */
 #envelope-wrap{
-  position:relative;width:370px;height:255px;
+  position:relative;
+  width:90vw; max-width:360px;
+  height:62vw; max-height:248px;
   cursor:pointer;
-  filter:drop-shadow(0 30px 70px rgba(0,0,0,0.85)) drop-shadow(0 0 50px rgba(12,29,58,0.25));
-  transition:transform .4s cubic-bezier(0.25, 1, 0.5, 1), filter .4s ease;
+  filter:drop-shadow(0 15px 35px rgba(0,0,0,0.75));
+  transition:transform .4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 #envelope-wrap:hover{
-  transform:scale(1.04) translateY(-8px);
-  filter:drop-shadow(0 40px 85px rgba(0,0,0,0.95)) drop-shadow(0 0 70px rgba(184,151,66,0.15));
+  transform:scale(1.02) translateY(-4px);
 }
 
 .env-body{
   position:absolute;inset:0;
-  background:linear-gradient(145deg,#07142b 0%,#030914 100%);
-  border-radius:4px;
+  background:linear-gradient(145deg,#061630 0%,#020712 100%);
+  border-radius:6px;
   border:1px solid rgba(184,151,66,0.25);
   overflow:hidden;
 }
 
-.env-stripe{
-  position:absolute;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(184,151,66,0.15),transparent);
-}
-
-.env-left{position:absolute;bottom:0;left:0;width:0;height:0;z-index:3;border-bottom:255px solid #040d1c;border-right:185px solid transparent;}
-.env-right{position:absolute;bottom:0;right:0;width:0;height:0;z-index:3;border-bottom:255px solid #040d1c;border-left:185px solid transparent;}
+/* Telefon ekranları için hassas üçgen kesimleri */
+.env-left{position:absolute;bottom:0;left:0;width:0;height:0;z-index:3;border-bottom:62vw solid #030b17;border-right:45vw solid transparent;}
+.env-right{position:absolute;bottom:0;right:0;width:0;height:0;z-index:3;border-bottom:62vw solid #030b17;border-left:45vw solid transparent;}
 .env-bottom{
-  position:absolute;bottom:0;left:0;right:0;height:48%;z-index:2;
-  background:linear-gradient(to top,#020610,#07152c);
+  position:absolute;bottom:0;left:0;right:0;height:49%;z-index:2;
+  background:linear-gradient(to top,#01040a,#05142b);
   border-top:1px solid rgba(184,151,66,0.15);
 }
 
 .env-flap{
   position:absolute;top:0;left:0;right:0;z-index:5;height:0;width:0;
-  border-left:185px solid transparent;
-  border-right:185px solid transparent;
-  border-top:152px solid #081732;
+  border-left:45vw solid transparent;
+  border-right:45vw solid transparent;
+  border-top:37vw solid #071936;
   transform-origin:top center;
-  transition:transform 1.4s cubic-bezier(.4,0,.2,1);
+  transition:transform 1s cubic-bezier(.4,0,.2,1);
 }
-.env-flap::after{
-  content:'';position:absolute;top:-152px;left:-185px;right:-185px;
-  border-left:185px solid transparent;
-  border-right:185px solid transparent;
-  border-top:152px solid rgba(184,151,66,0.08);
+
+@media(min-width:360px) {
+  .env-left{border-bottom-width:248px; border-right-width:180px;}
+  .env-right{border-bottom-width:248px; border-left-width:180px;}
+  .env-flap{border-left-width:180px; border-right-width:180px; border-top-width:148px;}
 }
 
 /* Balmumu Mühür */
 .seal{
   position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%) translateY(18px);
-  z-index:6;width:54px;height:54px;border-radius:50%;
-  background:radial-gradient(circle at 30% 30%,#dfc681 0%,#a28132 55%,#544113 100%);
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 6px 25px rgba(0,0,0,0.65), inset 0 2px 4px rgba(255,255,255,0.15);
-  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
-  transition:opacity .4s, transform .6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform:translate(-50%,-50%) translateY(15px);
+  z-index:6;width:56px;height:56px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#dfc681 0%,#a28132 55%,#4a3910 100%);
+  box-shadow:0 4px 15px rgba(0,0,0,0.6);
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  transition:opacity .3s ease, transform .5s ease;
 }
 
-/* Zarfın İçindeki Küçük Kağıt Parçası */
+/* İçten yükselen küçük kağıt önizlemesi */
 #letter{
-  position:absolute;width:325px;left:50%;transform:translateX(-50%);
+  position:absolute;width:88%;left:6%;
   bottom:15px;z-index:4;
-  background:var(--paper);border-radius:2px;padding:2rem;
-  box-shadow:0 -5px 25px rgba(0,0,0,0.5);
-  transition:bottom 1.6s cubic-bezier(.4,0,.2,1), opacity .6s;
-  opacity:0;max-height:180px;overflow:hidden;
+  background:var(--paper);border-radius:3px;padding:1.5rem;
+  opacity:0;max-height:160px;overflow:hidden;
+  transition:bottom 1.2s cubic-bezier(.4,0,.2,1), opacity 0.7s ease;
 }
-#letter p{font-family:'IM Fell English',serif;font-size:.85rem;line-height:1.8;color:var(--ink);opacity:0.75;}
 
-/* ── AÇILMA ANİMASYON DURUMLARI ── */
+/* ── TETİKLEYİCİ ANİMASYON SINIFLARI ── */
 .opened .env-flap{transform:rotateX(180deg); z-index:1;}
-.opened .seal{opacity:0;transform:translate(-50%,-50%) scale(0.3) rotate(45deg); pointer-events:none;}
-.opened #letter{bottom:180px;opacity:1;}
-.opened #envelope-wrap{cursor:default;transform:none !important;filter:drop-shadow(0 20px 50px rgba(0,0,0,0.8)) !important;}
-.opened .hint{opacity:0;pointer-events:none;}
+.opened .seal{opacity:0;transform:translate(-50%,-50%) scale(0.3); pointer-events:none;}
+.opened #letter{bottom:70px; opacity:1;}
+.opened .hint{opacity:0;}
 
-/* ── TAM MEKTUP EKRANI (MÜKEMMEL PARLAKLIK) ── */
+/* ── SİNEMATİK TAM MEKTUP EKRANI (MOBİL ODAKLI) ── */
 #full-letter{
   position:fixed;inset:0;z-index:100;
-  background:rgba(2,5,11,0.97);
+  background:rgba(2, 5, 11, 0.96);
   display:flex;align-items:center;justify-content:center;
-  padding:2rem;opacity:0;pointer-events:none;
-  transition:opacity 1.2s ease;
-  backdrop-filter:blur(8px);
+  padding:1rem;opacity:0;pointer-events:none;
+  transition:opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 #full-letter.visible{opacity:1;pointer-events:all;}
 
 .letter-paper{
-  background:var(--paper);
-  max-width:560px;width:100%;max-height:85vh;overflow-y:auto;
-  border-radius:4px;padding:4.5rem 4.5rem 4rem;position:relative;
-  box-shadow:0 50px 130px rgba(0,0,0,0.9), 0 0 0 1px rgba(184,151,66,0.15);
-  transform:translateY(40px) scale(0.95);
-  transition:transform 1.2s cubic-bezier(0.15, 1, 0.3, 1);
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  width:100%; max-width:540px;
+  height: auto; max-height:82vh;
+  overflow-y:auto;
+  border-radius:6px;
+  padding: 3.5rem 2rem 3rem; /* Mobilde taşma yapmaması için iç boşluklar dengelendi */
+  position:relative;
+  box-shadow:0 25px 65px rgba(0,0,0,0.85), 0 0 0 1px rgba(184,151,66,0.15);
+  transform:translateY(30px);
+  transition:transform 1s cubic-bezier(0.15, 1, 0.3, 1);
 }
-#full-letter.visible .letter-paper{transform:translateY(0) scale(1);}
+#full-letter.visible .letter-paper{transform:translateY(0);}
 
+/* Satır çizgileri efekti */
 .letter-paper::before{
-  content:'';position:absolute;inset:0;border-radius:4px;
-  background:repeating-linear-gradient(transparent,transparent 33px,rgba(26,33,48,0.04) 33px,rgba(26,33,48,0.04) 34px);
+  content:'';position:absolute;inset:0;border-radius:6px;
+  background:repeating-linear-gradient(transparent,transparent 33px,rgba(26,33,48,0.025) 33px,rgba(26,33,48,0.025) 34px);
   pointer-events:none;
 }
+
+/* Sol marjin asalet çizgisi */
 .letter-paper::after{
-  content:'';position:absolute;top:0;bottom:0;left:4.5rem;width:1px;
+  content:'';position:absolute;top:0;bottom:0;left:2rem;width:1px;
   background:linear-gradient(to bottom,transparent,rgba(184,151,66,0.15),transparent);
   pointer-events:none;
 }
 
 .letter-ornament{
-  text-align:center;margin-bottom:2.5rem;
-  font-size:.8rem;letter-spacing:10px;
-  color:rgba(162,129,50,0.4);font-family:'Cinzel',serif;
+  text-align:center;margin-bottom:2rem;
+  font-size:.7rem;letter-spacing:6px;
+  color:rgba(162,129,50,0.6);font-family:'Cinzel',serif;
 }
 
 .letter-body{
-  font-family:'IM Fell English',serif;font-size:1.1rem;
-  line-height:2.1;color:var(--ink);
+  font-family:'IM Fell English',serif;
+  font-size:1.05rem; line-height:2;
+  color:var(--ink) !important;
   white-space:pre-line;text-align:justify;
+  padding-left: 0.8rem; /* Marjin çizgisinden sonrasını korumak için */
 }
 
 .letter-sig{
-  margin-top:4rem;text-align:right;
+  margin-top:3.5rem;text-align:right;
   font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:1.25rem;color:rgba(26,33,48,0.6);
+  font-size:1.15rem;color:rgba(26,33,48,0.7);
   font-weight: 600;
 }
 
+/* Mobil için kapatma butonu alanı geniştirildi */
 .close-btn{
-  position:fixed;top:2rem;right:2rem;
-  background:none;border:1px solid rgba(184,151,66,0.25);
-  border-radius:50%;width:44px;height:44px;
-  color:rgba(223,198,129,0.5);font-size:1.1rem;cursor:pointer;
-  transition:all .3s ease;display:flex;align-items:center;justify-content:center;
+  position:fixed; top:1.2rem; right:1.2rem;
+  background:rgba(4, 12, 26, 0.5); border:1px solid rgba(184,151,66,0.3);
+  border-radius:50%; width:46px; height:46px;
+  color:rgba(223,198,129,0.8); font-size:1.2rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
 }
-.close-btn:hover{background:rgba(184,151,66,0.1);color:var(--gold2);border-color:rgba(184,151,66,0.6);transform:rotate(90deg);}
+.close-btn:hover{background:rgba(184,151,66,0.15); color:var(--gold2);}
 
-.letter-paper::-webkit-scrollbar{width:4px;}
-.letter-paper::-webkit-scrollbar-thumb{background:rgba(184,151,66,0.3);border-radius:2px;}
+.letter-paper::-webkit-scrollbar{width:3px;}
+.letter-paper::-webkit-scrollbar-thumb{background:rgba(184,151,66,0.25);border-radius:2px;}
 
-@media(max-width:440px){
-  #envelope-wrap{width:310px;height:215px;}
-  .env-flap{border-left-width:155px;border-right-width:155px;border-top-width:128px;}
-  .env-left{border-bottom-width:215px;border-right-width:155px;}
-  .env-right{border-bottom-width:215px;border-left-width:155px;}
-  #letter{width:270px;}
-  .letter-paper{padding:3.5rem 2rem 3rem;}
-  .letter-paper::after{left:2rem;}
+/* Büyük Ekran / Masaüstü Optimizasyonu */
+@media(min-width:480px){
+  .letter-paper { padding: 4.5rem 4rem 3.5rem; }
+  .letter-paper::after { left: 4rem; }
+  .letter-body { padding-left: 0; }
+  .letter-ornament { font-size: .8rem; letter-spacing: 9px; }
+  .close-btn { top: 2rem; right: 2rem; }
 }
 </style>
 </head>
 <body>
 
 <div id="bg"></div>
-<div class="moon"></div>
 <canvas id="canvas-layer"></canvas>
 
 <div id="scene">
@@ -214,13 +211,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--navy);font-fam
 
   <div id="envelope-wrap" onclick="openEnvelope()">
     <div class="env-body">
-      <div class="env-stripe" style="top:33%"></div>
-      <div class="env-stripe" style="top:65%"></div>
       <div class="env-bottom"></div>
       <div class="env-left"></div>
       <div class="env-right"></div>
       <div id="letter">
-        <p>Sevgili Meryem...</p>
+        <p style="font-family:'IM Fell English',serif;font-size:.8rem;color:var(--ink);opacity:0.6;">Sevgili Meryem...</p>
       </div>
     </div>
     <div class="env-flap"></div>
@@ -238,23 +233,44 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--navy);font-fam
 </div>
 
 <script>
-// ── BURAYA KENDİ SON MEKTUBUNU YAZABİLİRSİN ──
+// Meryem için hazırlanan nihai metin doğrultusunda yapılandırıldı.
 const NOTE = `Sevgili Meryem,
 
-Buraya yazacağım kelimeleri seçmek ne kadar zor olsa da, bu sana olan son sözlerim... Seninle geçen her an, hayatımın en özel ve unutulmaz sayfaları olarak kalacak. 
+Sana bu satırları yazmak, hayatım boyunca aldığım en zor ama aynı zamanda en gerekli kararlardan biriydi. Bazı şeylerin kelimelerle ifade edilemeyecek kadar ağır olduğunu bilsem de, yapabileceğim birşey yok gibi bu temayı özellikle seçtim rengini sevdiğin için..
 
-Sana hayatın boyunca hak ettiğin tüm mutlulukları, huzuru ve güzellikleri diliyorum. Kendine her zaman çok iyi bak.
+Seninle geçen, hayatıma dokunduğun her an benim için son derece kıymetli ve özeldi. Yaşadığımız, paylaştığımız her güzel hatırayı zihnimin en değerli köşesinde saklayacağımdan emin olabilirsin. İleride geriye dönüp baktığımda, seni hep o temiz ve derin sevgiyle hatırlayacağım.
 
-Seni daima derin bir sevgiyle hatırlayacağım...`;
+Hayatın getireceği tüm güzelliklerin, hak ettiğin o sonsuz mutluluk ve huzurun her an seninle olmasını diliyorum. Umarım karşına hep senin gibi kıymet bilen ve seni incitmeyecek insanlar çıkar. Aslında tüm suçu kendi üstüme alabilirim sonuçta Sevdiğin birisi olduğunu biliyordum seninle konuşurken.
+
+Seni bu hayatta olduğum heran için seveceğim sevdiğin insanın geri dönmesini sağlayamam belki ama, senin yerin benim kalbimde herzaman ayrı, bana bi kızı en fazla ne kadar sevebiliceğimi gösterdin bu satırları yazarken çok zorlanıyorum gözlerim doluyor biriktirdiğim anılar o kadar güzeldiki bidaha yaşamak isterdim
+
+Umarım mutlu olursun aklından çıkaramadığın ve sevdiğin kişi artık senin çektiğin acıları görür ve yanına gelir umarım ben hayatında olmasamda herzaman senin iyiliğini istiyorum çok sulu gözüm be ama bunları yazmam gerekliydi sanırım Seni o kadar seviyorum ki bu sevgiyi anlatmaya ne kelimelerim yetiyor, ne de içimde kopan o sessiz fırtınaları sığdırabileceğim tek bir cümle bulabiliyorum
+
+Bazen sadece sessizce durup varlığına şükretmek, bazen de bu dünyadaki tüm güzellikleri senin önüne sermek istiyorum. Hayatın bana sunduğu en güzel hediye, seninle paylaştığım o unutulmaz anlar ve kalbimin ritmini değiştiren o eşsiz varlığın oldu..
+
+Bunları yazmak hiç kolay değil emin ol ben senin kalbinin güzelliğine kurban olurum herzaman sen güzel değilim diyorsunya 
+
+Dünyadaki en güzel şeyler, kusursuz olanlar değil, eşi benzeri olmayanlardır. Gece yarısı gökyüzüne baksan milyarlarca yıldız görürsün ama senin gözün sadece bir tanesine kayar, çünkü o farklı parıldar. Sen kendini bir kalıba sokmaya çalıştığın için 'güzel değilim' diyorsun; oysa senin güzelliğin tam olarak o kalıplara sığmayışında,
+
+Ve benim gözümde ne kadar güzel parıldadığını görseydin diğer insanlar karşısında sende eminim ne kadar güzel derdin güzelliğin beni başka dünyalara götürüyor herseferinde
+
+Sevdiğine kavuşman dileğiyle sana karşı hiç bir zaman kin veya nefret beslemedim kötü niyetli üzülüceğini bilerek birşey yapmadım düşlerimin kızı rüyalarımdan çıkmıyor Seni özledim desem ne tepki verirdin ilk buluştuğumuzda ne kadar utanmıştn hatırlıyorumda çok güzeldi ikinci buluşmamızda ben senin mahalleye gelip kaybolmuştm konum atmıştn zeyna vardı yanında 
+
+üçüncü buluşmamız biraz kötüydü ilk defa meskene gelmiştin metrodan almıştım seni wpde geriye doğru gittim birazda olm özledim yazmışssın ağlicam mk hatırlıyonmu kalede gülü vermiştim ilk defa sarılmıştım o zaman 20 ocakta ilk defa çıkma teklifi etmişim bunların hepsi kayıtlı bende sana o kadar çok değer veriyorum ve seviyorum bir an olsun aklımdan çıkmadı bu anılar 
+
+Bunu artık seninle konuşmuyorum sonsuza kadar gidicem falan gibi algılama sadece sana olan hislerimi dökmek istedim basit bi yolla olmasını istemedim sadece seni ne kadar mutlu ettim yada edebildimmi bilmiyorum ama sen beni çok mutlu ettin sana kötü davranan herkesten tiksiniyorum senin sevdiğiin birisi bile olsa 
+
+Herkesin bir unutamadığı ve sonsuza kadar unutamiyacağı seveceği bir insan vardır uğruna herşeyi yapacağı benim için bu kişi senden başkası olamaz hayatımın sonuna kadar neden denemedim? ya olsaydı nası olurdu? demek istemiyorum ama senin sevdiğin varken söylemem çok zor sevgilim olurmusun diye
+
+Seni Çok Seviyorum Benim İmkansız Aşk💙 Ve Hayatımda Tanıdığım Dünyanınn en güzel kızına sevgilerimle :) `;
 
 document.getElementById('letter-content').textContent = NOTE;
 
-// ── GELİŞMİŞ LACİVERT GÜL VE YAPRAK PARÇACIK MOTORU ──
+/* ── MOBİL DOSTU AKICI YAPRAK MOTORU ── */
 const canvas = document.getElementById('canvas-layer');
 const ctx = canvas.getContext('2d');
-
 let particles = [];
-const particleCount = 45;
+const particleCount = 18; // Mobil performansı için optimize edilmiş dengeli sayı
 
 function resizeCanvas() {
   canvas.width = window.innerWidth;
@@ -263,140 +279,68 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Yaprak ve Gül Paleti (Zengin Gece Mavisi Tonları)
-const roseColors = [
-  { main: '#081a3e', shadow: '#030a1a', highlight: '#122f6d', op: 0.7 },
-  { main: '#0a2354', shadow: '#040e24', highlight: '#18428c', op: 0.6 },
-  { main: '#112e66', shadow: '#06132e', highlight: '#2153b0', op: 0.5 },
-  { main: '#05122c', shadow: '#01040f', highlight: '#0d255c', op: 0.8 }
-];
+const leafColors = ['#061329', '#0a2354', '#112e66', '#0d255c'];
 
 class Particle {
-  constructor() {
-    this.reset();
-    this.y = Math.random() * canvas.height; // İlk açılışta ekrana dağılsınlar
-  }
-
+  constructor() { this.reset(); this.y = Math.random() * canvas.height; }
   reset() {
     this.x = Math.random() * canvas.width;
-    this.y = -40;
-    this.size = 6 + Math.random() * 16;
-    this.speedY = 0.4 + Math.random() * 0.9;
-    this.speedX = (Math.random() - 0.5) * 0.4;
+    this.y = -20;
+    this.size = 5 + Math.random() * 8;
+    this.speedY = 0.35 + Math.random() * 0.6;
+    this.speedX = (Math.random() - 0.5) * 0.18;
     this.angle = Math.random() * Math.PI * 2;
-    this.spin = (Math.random() - 0.5) * 0.015;
-    this.color = roseColors[Math.floor(Math.random() * roseColors.length)];
-    this.type = Math.random() > 0.35 ? 'petal' : 'rose'; // %65 Yaprak, %35 Tam Gül tomurcuğu
+    this.spin = (Math.random() - 0.5) * 0.006;
+    this.color = leafColors[Math.floor(Math.random() * leafColors.length)];
   }
-
   draw() {
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(this.angle);
-    ctx.globalAlpha = this.color.op;
-
-    // 3D Derinlik fluluğu efekti
-    if (this.size > 16) {
-      ctx.filter = 'blur(1.5px)';
-    } else if (this.size < 9) {
-      ctx.filter = 'blur(0.5px)';
-    } else {
-      ctx.filter = 'none';
-    }
-
-    if (this.type === 'petal') {
-      // RÜZGARDA SÜZÜLEN LACİVERT YAPRAK ÇİZİMİ
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(-this.size, -this.size/2, -this.size, this.size, 0, this.size * 1.3);
-      ctx.bezierCurveTo(this.size, this.size, this.size, -this.size/2, 0, 0);
-      
-      let grad = ctx.createRadialGradient(-this.size/4, this.size/4, 1, 0, this.size/2, this.size);
-      grad.addColorStop(0, this.color.highlight);
-      grad.addColorStop(0.5, this.color.main);
-      grad.addColorStop(1, this.color.shadow);
-      
-      ctx.fillStyle = grad;
-      ctx.fill();
-
-      // Damar çizgisi
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.quadraticCurveTo(-this.size/6, this.size/2, 0, this.size * 1.1);
-      ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-    } else {
-      // SOYUT GECE GÜLÜ ÇİZİMİ (İÇ İÇE GEÇMİŞ KATMANLAR)
-      const r = this.size * 0.8;
-      
-      // Dış yaprak halkası
-      ctx.fillStyle = this.color.shadow;
-      ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI*2); ctx.fill();
-
-      // Orta Katmanlar
-      for(let i=0; i<5; i++) {
-        ctx.fillStyle = i % 2 === 0 ? this.color.main : this.color.highlight;
-        ctx.beginPath();
-        ctx.ellipse(Math.cos(i)*2, Math.sin(i)*2, r*0.7, r*0.4, i * 45 * Math.PI/180, 0, Math.PI*2);
-        ctx.fill();
-      }
-      
-      // Gül merkezi parıltısı
-      ctx.fillStyle = 'rgba(223,198,129,0.15)';
-      ctx.beginPath(); ctx.arc(0, 0, r*0.2, 0, Math.PI*2); ctx.fill();
-    }
-
-    ctx.restore();
+    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.angle);
+    ctx.fillStyle = this.color; ctx.globalAlpha = 0.45;
+    ctx.beginPath(); ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(-this.size, -this.size/2, -this.size, this.size, 0, this.size * 1.2);
+    ctx.bezierCurveTo(this.size, this.size, this.size, -this.size/2, 0, 0);
+    ctx.fill(); ctx.restore();
   }
-
   update() {
-    this.y += this.speedY;
-    this.x += this.speedX + Math.sin(this.y / 30) * 0.15; // Hafif süzülme dalgası
-    this.angle += this.spin;
-
-    if (this.y > canvas.height + 40 || this.x < -40 || this.x > canvas.width + 40) {
-      this.reset();
-    }
+    this.y += this.speedY; this.x += this.speedX + Math.sin(this.y / 60) * 0.08; this.angle += this.spin;
+    if (this.y > canvas.height + 20) this.reset();
   }
 }
 
-// Parçacıkları oluştur
-for (let i = 0; i < particleCount; i++) {
-  particles.push(new Particle());
-}
-
+for (let i = 0; i < particleCount; i++) particles.push(new Particle());
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  particles.forEach(p => {
-    p.update();
-    p.draw();
-  });
-  
+  for(let i=0; i<particles.length; i++) { particles[i].update(); particles[i].draw(); }
   requestAnimationFrame(animate);
 }
 animate();
 
-// ── ZARF ETKİLEŞİM FONKSİYONLARI ──
+/* ── SİNEMATİK GEÇİŞ YÖNETİMİ ── */
 let opened = false;
 function openEnvelope(){
   if(opened) return;
   opened = true;
+  
+  // Kademe 1: Kapak açılır ve küçük kağıt yükselir
   document.getElementById('scene').classList.add('opened');
   
-  // Zarf kapağı döndükten sonra tam mektup asaletle belirsin
+  // Kademe 2: Zarf arka planda yavaşça kaybolur
+  setTimeout(() => {
+    document.getElementById('scene').style.opacity = '0';
+  }, 950);
+  
+  // Kademe 3: Mektup kağıdı asaletle aşağıdan süzülerek ekrana yerleşir
   setTimeout(() => {
     document.getElementById('full-letter').classList.add('visible');
-  }, 1800);
+  }, 1300);
 }
 
 function closeFull(){
   document.getElementById('full-letter').classList.remove('visible');
+  setTimeout(() => {
+    document.getElementById('scene').style.opacity = '1';
+  }, 300);
 }
-
-// Esc tuşuna basınca mektup kapansın
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeFull(); });
 </script>
 </body>
