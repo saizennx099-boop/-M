@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sana Bir Mektup</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#07111f;
+  --navy2:#0c1c35;
+  --navy3:#112347;
+  --gold:#c9a84c;
+  --gold2:#e8c97a;
+  --paper:#faf6ee;
+  --ink:#111827;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--navy);font-family:'Cormorant Garamond',serif;user-select:none;}
+
+/* ── ARKA PLAN ── */
+#bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 40% 30%,#0d1f3c 0%,#07111f 55%,#040a14 100%);}
+
+/* ── YILDIZLAR ── */
+#stars-layer{position:fixed;inset:0;z-index:1;pointer-events:none;}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.08;transform:scale(1);}50%{opacity:.85;transform:scale(1.5);}}
+
+/* ── AY ── */
+.moon{
+  position:fixed;top:5vh;right:7vw;z-index:2;
+  width:64px;height:64px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#e8d090,#c9a84c 50%,#7a5a10);
+  box-shadow:0 0 28px rgba(201,168,76,.45),0 0 80px rgba(201,168,76,.15);
+  animation:moonGlow 7s ease-in-out infinite;
+}
+@keyframes moonGlow{0%,100%{box-shadow:0 0 28px rgba(201,168,76,.45),0 0 80px rgba(201,168,76,.15);}50%{box-shadow:0 0 50px rgba(201,168,76,.65),0 0 130px rgba(201,168,76,.25);}}
+
+/* ── GÜLLER SVG KATMANI ── */
+#roses-layer{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
+
+/* ── SAHNE ── */
+#scene{
+  position:fixed;inset:0;z-index:10;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1.8rem;
+}
+
+/* ipucu */
+.hint{
+  font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:5px;
+  color:rgba(201,168,76,.55);text-transform:uppercase;
+  animation:hintPulse 2.8s ease-in-out infinite;transition:opacity .8s;
+}
+@keyframes hintPulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+/* ── ZARF ── */
+#envelope-wrap{
+  position:relative;width:360px;height:250px;
+  cursor:pointer;
+  filter:drop-shadow(0 24px 60px rgba(0,0,0,.7)) drop-shadow(0 0 40px rgba(201,168,76,.08));
+  transition:transform .35s ease,filter .35s ease;
+}
+#envelope-wrap:hover{transform:scale(1.05) translateY(-6px);filter:drop-shadow(0 30px 70px rgba(0,0,0,.7)) drop-shadow(0 0 60px rgba(201,168,76,.18));}
+
+/* gövde */
+.env-body{
+  position:absolute;inset:0;
+  background:linear-gradient(150deg,#0d2050 0%,#091535 100%);
+  border-radius:3px 3px 7px 7px;
+  border:1.5px solid rgba(201,168,76,.3);
+  overflow:hidden;
+}
+
+/* yatay ince çizgiler */
+.env-stripe{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.2),transparent);}
+
+/* yan üçgenler - CSS clip trick yerine SVG polygon */
+.env-left{position:absolute;bottom:0;left:0;width:0;height:0;z-index:2;border-bottom:250px solid #091230;border-right:180px solid transparent;}
+.env-right{position:absolute;bottom:0;right:0;width:0;height:0;z-index:2;border-bottom:250px solid #091230;border-left:180px solid transparent;}
+.env-bottom{position:absolute;bottom:0;left:0;right:0;height:46%;z-index:1;background:linear-gradient(to top,#07111f,#0c1c35);border-top:1.5px solid rgba(201,168,76,.18);}
+
+/* kapak (flap) */
+.env-flap{
+  position:absolute;top:0;left:0;right:0;z-index:5;height:0;width:0;
+  border-left:180px solid transparent;
+  border-right:180px solid transparent;
+  border-top:148px solid #0e2356;
+  transform-origin:top center;
+  transition:transform 1.3s cubic-bezier(.4,0,.2,1);
+}
+.env-flap::after{
+  content:'';position:absolute;top:-148px;left:-180px;right:-180px;
+  border-left:180px solid transparent;
+  border-right:180px solid transparent;
+  border-top:148px solid rgba(201,168,76,.1);
+}
+
+/* mühür */
+.seal{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) translateY(14px);
+  z-index:6;width:56px;height:56px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#e8d090,#b8891c);
+  border:2px solid rgba(255,255,255,.12);
+  box-shadow:0 4px 20px rgba(0,0,0,.5),inset 0 1px 3px rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+  transition:opacity .4s,transform .5s;
+}
+
+/* ── ZARF İÇİ KAĞIT ── */
+#letter{
+  position:absolute;width:315px;left:50%;transform:translateX(-50%);
+  bottom:18px;z-index:4;
+  background:var(--paper);border-radius:2px;padding:2rem 2rem 1.5rem;
+  box-shadow:0 -4px 30px rgba(0,0,0,.4);
+  transition:bottom 1.5s cubic-bezier(.4,0,.2,1),opacity .5s;
+  opacity:0;max-height:210px;overflow:hidden;
+}
+#letter::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(transparent,transparent 27px,rgba(10,22,40,.06) 27px,rgba(10,22,40,.06) 28px);
+  pointer-events:none;
+}
+#letter p{font-family:'IM Fell English',serif;font-size:.8rem;line-height:1.9;color:var(--ink);position:relative;z-index:1;white-space:pre-line;}
+
+/* ── AÇILMIŞ HAL ── */
+.opened .env-flap{transform:rotateX(180deg);}
+.opened .seal{opacity:0;transform:translate(-50%,-50%) scale(.4);}
+.opened #letter{bottom:195px;opacity:1;}
+.opened #envelope-wrap{cursor:default;transform:none !important;filter:drop-shadow(0 24px 60px rgba(0,0,0,.7)) !important;}
+.opened .hint{opacity:0;pointer-events:none;}
+
+/* ── TAM MEKTUP ── */
+#full-letter{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(4,8,16,.96);
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem;
+  opacity:0;pointer-events:none;
+  transition:opacity .9s ease;
+  backdrop-filter:blur(6px);
+}
+#full-letter.visible{opacity:1;pointer-events:all;}
+
+.letter-paper{
+  background:var(--paper);
+  max-width:580px;width:100%;max-height:88vh;overflow-y:auto;
+  border-radius:3px;padding:4rem 4rem 3.5rem;position:relative;
+  box-shadow:0 40px 120px rgba(0,0,0,.85),0 0 0 1px rgba(201,168,76,.18);
+  animation:paperRise .9s cubic-bezier(.2,0,0,1) both;
+}
+@keyframes paperRise{from{transform:translateY(35px) scale(.96);opacity:0;}to{transform:translateY(0) scale(1);opacity:1;}}
+
+.letter-paper::before{
+  content:'';position:absolute;inset:0;border-radius:3px;
+  background:repeating-linear-gradient(transparent,transparent 33px,rgba(10,22,40,.055) 33px,rgba(10,22,40,.055) 34px);
+  pointer-events:none;
+}
+.letter-paper::after{
+  content:'';position:absolute;top:0;bottom:0;left:4rem;width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(20,50,120,.15),transparent);
+  pointer-events:none;
+}
+
+.letter-ornament{
+  text-align:center;margin-bottom:2rem;
+  font-size:.75rem;letter-spacing:8px;
+  color:rgba(10,22,40,.25);font-family:'Cinzel',serif;
+  position:relative;z-index:1;
+}
+
+.letter-body{
+  font-family:'IM Fell English',serif;font-size:1.05rem;
+  line-height:2.05;color:var(--ink);
+  white-space:pre-line;position:relative;z-index:1;
+}
+
+.letter-sig{
+  margin-top:3rem;text-align:right;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.15rem;color:rgba(10,22,40,.45);position:relative;z-index:1;
+}
+
+.close-btn{
+  position:fixed;top:1.5rem;right:1.8rem;
+  background:none;border:1px solid rgba(201,168,76,.3);
+  border-radius:50%;width:42px;height:42px;
+  color:rgba(201,168,76,.6);font-size:1rem;cursor:pointer;
+  transition:all .25s;display:flex;align-items:center;justify-content:center;
+}
+.close-btn:hover{background:rgba(201,168,76,.1);color:var(--gold2);border-color:rgba(201,168,76,.6);}
+
+/* scrollbar */
+.letter-paper::-webkit-scrollbar{width:3px;}
+.letter-paper::-webkit-scrollbar-thumb{background:rgba(201,168,76,.25);border-radius:2px;}
+
+/* mobile */
+@media(max-width:440px){
+  #envelope-wrap{width:300px;height:210px;}
+  .env-flap{border-left-width:150px;border-right-width:150px;border-top-width:124px;}
+  .env-left{border-bottom-width:210px;border-right-width:150px;}
+  .env-right{border-bottom-width:210px;border-left-width:150px;}
+  #letter{width:265px;}
+  .letter-paper{padding:3rem 2.2rem 2.5rem;}
+  .letter-paper::after{left:2.2rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="bg"></div>
+<div id="stars-layer"></div>
+<div class="moon"></div>
+<div id="roses-layer"></div>
+
+<!-- SAHNE -->
+<div id="scene">
+  <p class="hint">zarfa dokun &nbsp;·&nbsp; aç</p>
+
+  <div id="envelope-wrap" onclick="openEnvelope()">
+    <div class="env-body">
+      <div class="env-stripe" style="top:30%"></div>
+      <div class="env-stripe" style="top:62%"></div>
+      <div class="env-bottom"></div>
+      <div class="env-left"></div>
+      <div class="env-right"></div>
+      <div id="letter">
+        <p>Sevgili Meryem,
+
+Buraya ne yazmam gerekli bilmiyorum ama seni seviyorum...</p>
+      </div>
+    </div>
+    <div class="env-flap"></div>
+    <div class="seal">🤍</div>
+  </div>
+</div>
+
+<!-- TAM MEKTUP -->
+<div id="full-letter">
+  <button class="close-btn" onclick="closeFull()">✕</button>
+  <div class="letter-paper">
+    <div class="letter-ornament">— ✦ —</div>
+    <div class="letter-body" id="letter-content"></div>
+    <div class="letter-sig">Gönülden Sevgilerle... ♥</div>
+  </div>
+</div>
+
+<script>
+// ── NOT ──
+const NOTE = `BURAYA_NOT_GELİCEK`;
+document.getElementById('letter-content').textContent = NOTE;
+
+// ── YILDIZLAR ──
+const sl = document.getElementById('stars-layer');
+for(let i=0;i<200;i++){
+  const s=document.createElement('div'); s.className='star';
+  const sz=.4+Math.random()*2.2;
+  s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;animation-duration:${1.8+Math.random()*5}s;animation-delay:${Math.random()*6}s;`;
+  sl.appendChild(s);
+}
+
+// ── GÜLLER ──
+// Her gül bir SVG path koleksiyonu — lacivert/koyu tonlarda
+const roseColors = [
+  ['#0d2a5e','#0a1f48','#071535'],
+  ['#122466','#0c1a50','#08122e'],
+  ['#1a3070','#0f2255','#0a1840'],
+  ['#0f1f4a','#091535','#050e22'],
+];
+
+function makePetal(cx,cy,rx,ry,rot,fill,op){
+  return `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${cx} ${cy})" fill="${fill}" opacity="${op}"/>`;
+}
+
+function makeRoseSVG(colors, scale=1){
+  const [c1,c2,c3]=colors;
+  // birden fazla katmanlı taç yaprak
+  let petals='';
+  const count=12;
+  for(let i=0;i<count;i++){
+    const angle=i*(360/count);
+    const rx=18*scale, ry=10*scale;
+    const cx=24*scale+Math.cos(angle*Math.PI/180)*14*scale;
+    const cy=24*scale+Math.sin(angle*Math.PI/180)*14*scale;
+    const op=0.55+Math.random()*.35;
+    const col=i%3===0?c1:i%3===1?c2:c3;
+    petals+=makePetal(cx,cy,rx,ry,angle,col,op);
+  }
+  // iç katman
+  for(let i=0;i<7;i++){
+    const angle=i*(360/7)+15;
+    const rx=12*scale,ry=7*scale;
+    const cx=24*scale+Math.cos(angle*Math.PI/180)*8*scale;
+    const cy=24*scale+Math.sin(angle*Math.PI/180)*8*scale;
+    petals+=makePetal(cx,cy,rx,ry,angle,c1,0.7);
+  }
+  // merkez
+  petals+=`<circle cx="${24*scale}" cy="${24*scale}" r="${6*scale}" fill="${c2}" opacity="0.85"/>`;
+  // yapraklar
+  petals+=`<ellipse cx="${10*scale}" cy="${42*scale}" rx="${14*scale}" ry="${7*scale}" transform="rotate(-40 ${10*scale} ${42*scale})" fill="#06183a" opacity="0.5"/>`;
+  petals+=`<ellipse cx="${38*scale}" cy="${44*scale}" rx="${12*scale}" ry="${6*scale}" transform="rotate(30 ${38*scale} ${44*scale})" fill="#06183a" opacity="0.45"/>`;
+  const size=48*scale;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${petals}</svg>`;
+}
+
+// Gül konumları — köşelere, kenarlara, arka plana dağıt
+const rosePositions=[
+  {x:-3,y:-2,s:3.5,op:.45,rot:-20},
+  {x:85,y:-3,s:3,op:.38,rot:25},
+  {x:-5,y:65,s:4,op:.5,rot:10},
+  {x:82,y:70,s:3.2,op:.42,rot:-15},
+  {x:40,y:-5,s:2.5,op:.3,rot:5},
+  {x:-4,y:30,s:2.8,op:.35,rot:-30},
+  {x:88,y:35,s:2.6,op:.32,rot:20},
+  {x:20,y:85,s:3,op:.38,rot:-10},
+  {x:65,y:82,s:2.8,op:.35,rot:15},
+  {x:50,y:88,s:2.2,op:.28,rot:-5},
+  {x:10,y:10,s:1.8,op:.2,rot:30},
+  {x:75,y:15,s:2,op:.22,rot:-25},
+  {x:30,y:75,s:1.9,op:.2,rot:12},
+];
+
+const rl=document.getElementById('roses-layer');
+rosePositions.forEach(r=>{
+  const colorSet=roseColors[Math.floor(Math.random()*roseColors.length)];
+  const wrap=document.createElement('div');
+  wrap.style.cssText=`
+    position:absolute;
+    left:${r.x}%;top:${r.y}%;
+    opacity:${r.op};
+    transform:rotate(${r.rot}deg) scale(${r.s});
+    transform-origin:center;
+    filter:blur(${r.s>3?1.5:0.5}px);
+    pointer-events:none;
+  `;
+  wrap.innerHTML=makeRoseSVG(colorSet,1);
+  rl.appendChild(wrap);
+});
+
+// ── ZARF AÇ ──
+let opened=false;
+function openEnvelope(){
+  if(opened)return;
+  opened=true;
+  document.getElementById('scene').classList.add('opened');
+  setTimeout(()=>document.getElementById('full-letter').classList.add('visible'),1700);
+}
+function closeFull(){
+  document.getElementById('full-letter').classList.remove('visible');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeFull();});
+</script>
+</body>
+</html>
